@@ -54,6 +54,12 @@ select {
   margin-bottom: 12px;
 }
 
+.topbar-actions {
+  display: flex;
+  align-items: center;
+  gap: 10px;
+}
+
 .brand {
   display: flex;
   align-items: center;
@@ -554,6 +560,11 @@ h1 {
 
   .topbar {
     gap: 12px;
+  }
+
+  .topbar-actions {
+    display: grid;
+    width: 100%;
   }
 
   .module-grid,

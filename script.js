@@ -321,14 +321,20 @@ const state = {
   roundSubstage: "play",
   answers: {},
   sorterPlacements: {},
-  tutorialBackState: null
+  tutorialBackState: null,
+  history: []
 };
 
 const app = document.getElementById("app");
 const homeButton = document.getElementById("home-button");
+const backButton = document.getElementById("back-button");
 
 homeButton.addEventListener("click", () => {
   resetToHome();
+});
+
+backButton.addEventListener("click", () => {
+  goBack();
 });
 
 function snapshotState() {
@@ -342,6 +348,10 @@ function snapshotState() {
   };
 }
 
+function pushHistory() {
+  state.history.push(snapshotState());
+}
+
 function restoreState(snapshot) {
   state.screen = snapshot.screen;
   state.moduleId = snapshot.moduleId;
@@ -352,7 +362,16 @@ function restoreState(snapshot) {
   render();
 }
 
+function goBack() {
+  if (state.history.length === 0) {
+    return;
+  }
+  const previous = state.history.pop();
+  restoreState(previous);
+}
+
 function openTutorial() {
+  pushHistory();
   state.tutorialBackState = snapshotState();
   state.screen = "tutorial";
   render();
@@ -375,10 +394,12 @@ function resetToHome() {
   state.stage = "intro";
   state.criteriaIndex = 0;
   state.roundSubstage = "play";
+  state.history = [];
   render();
 }
 
 function startModule(moduleId) {
+  pushHistory();
   state.screen = "module";
   state.moduleId = moduleId;
   state.roundIndex = 0;
@@ -404,17 +425,25 @@ function currentCriterion(round) {
 function nextStep() {
   const module = currentModule();
   const round = currentRound();
+  let didMove = false;
 
   if (state.stage === "intro") {
+    pushHistory();
     state.stage = "theory";
+    didMove = true;
   } else if (state.stage === "theory") {
+    pushHistory();
     state.stage = "round";
     state.roundSubstage = round.type === "bug-hunt" ? "detect" : "play";
     state.criteriaIndex = 0;
+    didMove = true;
   } else if (state.stage === "round" && round.type === "sort-sequence" && state.roundSubstage === "criteria-result") {
+    pushHistory();
     state.criteriaIndex += 1;
     state.roundSubstage = "play";
+    didMove = true;
   } else if (state.stage === "round-result") {
+    pushHistory();
     if (state.roundIndex < module.rounds.length - 1) {
       state.roundIndex += 1;
       state.stage = "round";
@@ -423,15 +452,19 @@ function nextStep() {
     } else {
       state.stage = "outro";
     }
+    didMove = true;
   } else if (state.stage === "outro") {
     resetToHome();
     return;
   }
 
-  render();
+  if (didMove) {
+    render();
+  }
 }
 
 function render() {
+  syncChrome();
   if (state.screen === "home") {
     renderHome();
     return;
@@ -456,13 +489,19 @@ function render() {
   }
 }
 
+function syncChrome() {
+  if (state.history.length > 0) {
+    backButton.classList.remove("hidden");
+  } else {
+    backButton.classList.add("hidden");
+  }
+}
+
 function renderHome() {
   app.innerHTML = `
     <section class="hero">
       <div class="hero-copy">
-        <span class="module-chip">Фаза 2</span>
         <h2>Небольшое приключение для взрослого и ребенка</h2>
-        <p>Здесь теория не живет отдельно. Сначала мы читаем короткую подводку, потом выполняем задание, а в конце обсуждаем, что заметили и как это связано с AI.</p>
         <div class="hero-callout">
           <div class="companion-inline">
             <div class="companion-face">🤖</div>
@@ -751,11 +790,13 @@ function wireSortRound(round, criterion) {
     }
 
     if (state.criteriaIndex < round.criteria.length - 1) {
+      pushHistory();
       state.roundSubstage = "criteria-result";
       render();
       return;
     }
 
+    pushHistory();
     state.stage = "round-result";
     render();
   });
@@ -843,11 +884,13 @@ function wireBugHuntRound(round, isDetect) {
     }
 
     if (isDetect) {
+      pushHistory();
       state.roundSubstage = "fix";
       render();
       return;
     }
 
+    pushHistory();
     state.stage = "round-result";
     render();
   });
