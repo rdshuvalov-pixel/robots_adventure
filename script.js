@@ -1,100 +1,206 @@
+const aiTutorial = {
+  title: "Что нужно знать про AI",
+  intro: [
+    "AI — это не волшебство и не живой мозг.",
+    "Умная программа учится замечать признаки, выполнять шаги и искать подходящие ответы.",
+    "Но она не понимает мир так, как человек."
+  ],
+  points: [
+    {
+      title: "AI замечает признаки",
+      text: "Иногда умная программа смотрит на предметы и ищет, чем они похожи и чем отличаются."
+    },
+    {
+      title: "Роботу нужны понятные шаги",
+      text: "Если шаги неполные, перепутанные или неясные, появляется ошибка."
+    },
+    {
+      title: "Человек очень важен",
+      text: "Человек задает вопрос, проверяет ответ и замечает, когда что-то пошло не так."
+    }
+  ],
+  outro:
+    "Умная программа умеет многое, но ей все равно нужны понятные признаки, хорошие шаги и внимательный человек рядом."
+};
+
 const modules = {
   sorter: {
     id: "sorter",
     title: "Сортировщик",
     emoji: "🧺",
-    idea: "Замечаем признаки и раскладываем похожие предметы по группам.",
-    introTitle: "Помогаем роботу наводить порядок",
+    idea: "Берем один набор карточек и пробуем сортировать его по разным признакам.",
+    introTitle: "Помогаем роботу замечать признаки",
     introText: [
-      "Сегодня мы будем помощниками маленького робота.",
-      "Он видит много предметов сразу, но пока не понимает, какие из них похожи друг на друга.",
-      "Наша задача — заметить важный признак и разложить предметы по местам."
+      "Сегодня мы будем помогать роботу смотреть на один и тот же набор карточек по-разному.",
+      "Иногда мы заметим цвет, иногда размер, а иногда — живое перед нами или неживое.",
+      "Карточки останутся теми же, но группы будут меняться."
     ],
     theoryText: [
       "Умные программы не делают все волшебством.",
       "Сначала они учатся замечать признаки.",
-      "Если у предметов есть что-то общее, их можно объединить в одну группу."
+      "Если мы смотрим на тот же набор по новому признаку, порядок тоже меняется."
     ],
     outroTitle: "Что мы поняли",
     outroText: [
-      "Мы не просто раскладывали картинки.",
-      "Мы искали признак, по которому предметы можно объединить.",
-      "Так и умные программы учатся замечать, что похоже, а что отличается."
+      "Мы сортировали одни и те же карточки по разным признакам.",
+      "Значит, важен не только сам предмет, но и то, на что именно мы смотрим.",
+      "Так и умные программы учатся замечать разные особенности одного и того же мира."
     ],
     rounds: [
       {
-        id: "sorter-toys",
-        title: "Игрушечный хаос",
-        type: "sort",
-        prompt: "Разложи игрушки на две группы: где есть колеса и где колес нет.",
-        question: "Можно ли было разложить эти же игрушки по-другому?",
-        feedback: [
-          "Мы нашли очень заметный признак: колеса.",
-          "Если у игрушек есть колеса, они похожи по важной детали."
-        ],
-        aiLink: "Так же и умная программа сначала замечает особенности, которые помогают различать предметы.",
-        zones: [
-          { id: "wheels", label: "Есть колеса" },
-          { id: "no-wheels", label: "Нет колес" }
-        ],
+        id: "sorter-discovery",
+        title: "Набор исследователя",
+        type: "sort-sequence",
+        note: "Один и тот же набор можно раскладывать по-разному. Давай проверим это на практике.",
         cards: [
-          { id: "car", label: "Машинка", icon: "🚗", zone: "wheels" },
-          { id: "bus", label: "Автобус", icon: "🚌", zone: "wheels" },
-          { id: "bike", label: "Велосипед", icon: "🚲", zone: "wheels" },
-          { id: "bunny", label: "Плюшевый зайчик", icon: "🐰", zone: "no-wheels" },
-          { id: "doll", label: "Кукла", icon: "🪆", zone: "no-wheels" },
-          { id: "ball", label: "Мяч", icon: "⚽", zone: "no-wheels" }
-        ]
+          { id: "bus", label: "Красный автобус", icon: "🚌" },
+          { id: "bike", label: "Синий велосипед", icon: "🚲" },
+          { id: "tree", label: "Зеленое дерево", icon: "🌳" },
+          { id: "cat", label: "Рыжий кот", icon: "🐈" },
+          { id: "apple", label: "Красное яблоко", icon: "🍎" },
+          { id: "spoon", label: "Металлическая ложка", icon: "🥄" }
+        ],
+        criteria: [
+          {
+            id: "red",
+            title: "Сортировка 1",
+            note: "Сейчас мы смотрим только на цвет.",
+            prompt: "Разложи карточки на две группы: красное и не красное.",
+            zones: [
+              { id: "red", label: "Красное" },
+              { id: "not-red", label: "Не красное" }
+            ],
+            assignments: {
+              bus: "red",
+              bike: "not-red",
+              tree: "not-red",
+              cat: "not-red",
+              apple: "red",
+              spoon: "not-red"
+            },
+            feedback: [
+              "Мы выбрали только один признак — цвет.",
+              "Хотя карточки разные, сейчас нас интересовало только, что красное, а что нет."
+            ]
+          },
+          {
+            id: "size",
+            title: "Сортировка 2",
+            note: "Карточки те же. Теперь меняем признак.",
+            prompt: "Разложи карточки на группы: больше Милы и меньше Милы.",
+            zones: [
+              { id: "bigger", label: "Больше Милы" },
+              { id: "smaller", label: "Меньше Милы" }
+            ],
+            assignments: {
+              bus: "bigger",
+              bike: "bigger",
+              tree: "bigger",
+              cat: "smaller",
+              apple: "smaller",
+              spoon: "smaller"
+            },
+            feedback: [
+              "Мы ничего не меняли в карточках, только стали смотреть на размер.",
+              "Из-за этого группы стали совсем другими."
+            ]
+          },
+          {
+            id: "living",
+            title: "Сортировка 3",
+            note: "Последний признак в этом наборе — живое или неживое.",
+            prompt: "Разложи карточки на группы: живое и неживое.",
+            zones: [
+              { id: "living", label: "Живое" },
+              { id: "not-living", label: "Неживое" }
+            ],
+            assignments: {
+              bus: "not-living",
+              bike: "not-living",
+              tree: "living",
+              cat: "living",
+              apple: "living",
+              spoon: "not-living"
+            },
+            feedback: [
+              "Теперь мы уже не смотрели на цвет и не сравнивали размер.",
+              "Мы искали другой смысловой признак: живое это или неживое."
+            ]
+          }
+        ],
+        feedback: [
+          "Мы увидели самую важную вещь в этой игре: один и тот же набор можно разложить по-разному.",
+          "Все зависит от того, какой признак мы выбрали."
+        ],
+        question: "Какой признак больше всего менял группы?",
+        aiLink:
+          "Когда мы меняем признак, меняется и то, как система видит сходство между предметами."
       },
       {
-        id: "sorter-kitchen",
-        title: "Кухонная инспекция",
-        type: "sort",
-        prompt: "Разложи предметы по назначению: для питья, для еды или для готовки.",
-        question: "Почему чашка и стакан оказались рядом?",
-        feedback: [
-          "Мы использовали признак назначения.",
-          "Это уже более умный способ сортировки: не по виду, а по роли предмета."
-        ],
-        aiLink: "Машины тоже могут искать сходство не только по виду, но и по роли объекта.",
-        zones: [
-          { id: "drink", label: "Для питья" },
-          { id: "eat", label: "Для еды" },
-          { id: "cook", label: "Для готовки" }
-        ],
+        id: "sorter-home",
+        title: "Комната открытий",
+        type: "sort-sequence",
+        note: "Теперь попробуем то же самое на предметах дома.",
         cards: [
-          { id: "cup", label: "Чашка", icon: "☕", zone: "drink" },
-          { id: "glass", label: "Стакан", icon: "🥛", zone: "drink" },
-          { id: "plate", label: "Тарелка", icon: "🍽️", zone: "eat" },
-          { id: "spoon", label: "Ложка", icon: "🥄", zone: "eat" },
-          { id: "pot", label: "Кастрюля", icon: "🍲", zone: "cook" },
-          { id: "pan", label: "Сковорода", icon: "🍳", zone: "cook" }
-        ]
-      },
-      {
-        id: "sorter-wardrobe",
-        title: "Гардероб робота",
-        type: "sort",
-        prompt: "Разложи вещи по тому, куда их надевают: на голову, на ноги или на тело.",
-        question: "Как можно было бы разложить эту одежду еще одним способом?",
+          { id: "pillow", label: "Подушка", icon: "🛏️" },
+          { id: "scarf", label: "Шарф", icon: "🧣" },
+          { id: "cup", label: "Чашка", icon: "☕" },
+          { id: "boots", label: "Ботинки", icon: "🥾" },
+          { id: "spoon2", label: "Ложка", icon: "🥄" },
+          { id: "bear", label: "Плюшевый мишка", icon: "🧸" }
+        ],
+        criteria: [
+          {
+            id: "soft",
+            title: "Сортировка 1",
+            note: "Сначала проверим свойства предметов.",
+            prompt: "Разложи предметы на мягкие и твердые.",
+            zones: [
+              { id: "soft", label: "Мягкое" },
+              { id: "hard", label: "Твердое" }
+            ],
+            assignments: {
+              pillow: "soft",
+              scarf: "soft",
+              cup: "hard",
+              boots: "hard",
+              spoon2: "hard",
+              bear: "soft"
+            },
+            feedback: [
+              "Сейчас мы смотрели не на назначение, а на свойство предмета.",
+              "Это тоже важный признак для сортировки."
+            ]
+          },
+          {
+            id: "wear",
+            title: "Сортировка 2",
+            note: "А теперь тот же набор — по новому вопросу.",
+            prompt: "Разложи предметы на те, которые можно надеть, и те, которые нельзя.",
+            zones: [
+              { id: "wear", label: "Можно надеть" },
+              { id: "no-wear", label: "Нельзя надеть" }
+            ],
+            assignments: {
+              pillow: "no-wear",
+              scarf: "wear",
+              cup: "no-wear",
+              boots: "wear",
+              spoon2: "no-wear",
+              bear: "no-wear"
+            },
+            feedback: [
+              "Карточки остались теми же, но вопрос изменился.",
+              "Из-за этого предметы собрались уже в другие группы."
+            ]
+          }
+        ],
         feedback: [
-          "Один и тот же набор можно группировать по-разному.",
-          "Сегодня мы выбрали признак места на теле."
+          "Мы снова увидели, что предмет можно описывать разными способами.",
+          "Один и тот же набор меняет порядок, когда меняется признак."
         ],
-        aiLink: "Один и тот же объект может попадать в разные группы в зависимости от выбранного признака.",
-        zones: [
-          { id: "head", label: "На голову" },
-          { id: "legs", label: "На ноги" },
-          { id: "body", label: "На тело" }
-        ],
-        cards: [
-          { id: "hat", label: "Шапка", icon: "🧢", zone: "head" },
-          { id: "boots", label: "Ботинки", icon: "🥾", zone: "legs" },
-          { id: "socks", label: "Носки", icon: "🧦", zone: "legs" },
-          { id: "shirt", label: "Футболка", icon: "👕", zone: "body" },
-          { id: "scarf", label: "Шарф", icon: "🧣", zone: "body" },
-          { id: "shorts", label: "Шорты", icon: "🩳", zone: "body" }
-        ]
+        question: "Почему шарф и ботинки оказались вместе только во второй сортировке?",
+        aiLink: "Иногда система замечает не внешний вид, а назначение предмета."
       }
     ]
   },
@@ -102,83 +208,104 @@ const modules = {
     id: "bugHunt",
     title: "Поймай баг",
     emoji: "🛠️",
-    idea: "Ищем место, где инструкция ломается, и учимся чинить ее.",
+    idea: "Сначала находим ошибку, а потом помогаем роботу починить инструкцию.",
     introTitle: "Становимся ловцами ошибок",
     introText: [
-      "Представь, что у нас есть робот-помощник.",
-      "Он очень старается, но понимает команды слишком буквально.",
-      "Если в инструкции чего-то не хватает или шаги стоят не по порядку, робот обязательно ошибется."
+      "У нас есть робот-помощник. Он старается, но понимает команды слишком буквально.",
+      "Если что-то забыть, перепутать или сказать неясно, инструкция ломается.",
+      "Наша задача — сначала заметить ошибку, а потом починить план."
     ],
     theoryText: [
       "Компьютеры и роботы не умеют догадываться так, как люди.",
-      "Им нужно объяснять все по шагам.",
-      "Сейчас мы будем искать такие ошибки и чинить инструкции."
+      "Им нужны понятные шаги.",
+      "Поэтому в этой игре мы будем не только ловить баг, но и чинить алгоритм."
     ],
     outroTitle: "Что мы поняли",
     outroText: [
-      "Мы проверяли, понятны ли команды для робота.",
-      "Если инструкция неточная, неполная или стоит не в том порядке, появляется ошибка.",
-      "Поэтому человеку важно проверять результат и уточнять шаги."
+      "Мы сегодня не только искали ошибки, но и исправляли инструкции.",
+      "Значит, хороший алгоритм — это понятные, полные и аккуратно расположенные шаги.",
+      "Даже умной системе нужна помощь человека, чтобы задача была описана хорошо."
     ],
     rounds: [
       {
         id: "bug-socks",
         title: "Сборы на прогулку",
-        type: "choice",
-        prompt: "Посмотри на команды и найди, где робот запутается.",
+        type: "bug-hunt",
         note: "Иногда в инструкции все шаги есть, но порядок у них неудачный.",
         steps: ["Надень кроссовки.", "Надень носки."],
-        options: [
+        detectPrompt: "Посмотри на команды и найди, где робот запутается.",
+        detectOptions: [
           "Шаги перепутаны местами.",
           "Здесь все правильно.",
           "Не хватает шапки."
         ],
-        correctIndex: 0,
-        feedback: [
-          "Шаги даны не в том порядке.",
-          "Робот выполнит их буквально и получит нелепый результат."
+        detectCorrectIndex: 0,
+        fixPrompt: "Какой порядок шагов теперь будет правильным?",
+        fixOptions: [
+          "Надень носки -> Надень кроссовки",
+          "Надень кроссовки -> Надень носки",
+          "Сначала подпрыгни -> Потом надень носки"
         ],
-        question: "Что нужно поменять местами, чтобы все заработало?",
+        fixCorrectIndex: 0,
+        feedback: [
+          "Мы нашли ошибку в порядке шагов.",
+          "Потом мы починили инструкцию, и робот уже не запутался бы."
+        ],
+        question: "Почему порядок шагов оказался таким важным?",
         aiLink: "Для алгоритма порядок действий бывает так же важен, как и сами действия."
       },
       {
         id: "bug-sandwich",
         title: "Идеальный бутерброд",
-        type: "choice",
-        prompt: "Какой важный шаг забыли сказать роботу?",
+        type: "bug-hunt",
         note: "Люди часто мысленно добавляют недостающие мелочи. Робот этого не делает.",
         steps: ["Возьми хлеб.", "Положи сыр на хлеб."],
-        options: [
+        detectPrompt: "Какой важный шаг забыли сказать роботу?",
+        detectOptions: [
           "Нужно снять упаковку с сыра.",
           "Нужно сначала съесть хлеб.",
           "Нужно сначала помыть стол два раза."
         ],
-        correctIndex: 0,
-        feedback: [
-          "Нужно снять упаковку с сыра.",
-          "Без этого инструкция формально выполнена, но результат плохой."
+        detectCorrectIndex: 0,
+        fixPrompt: "Какую версию инструкции лучше дать роботу?",
+        fixOptions: [
+          "Возьми хлеб -> Сними упаковку с сыра -> Положи сыр на хлеб",
+          "Возьми хлеб -> Положи сыр на хлеб -> Спрячь сыр",
+          "Съешь хлеб -> Возьми сыр -> Уходи"
         ],
-        question: "Какие еще маленькие шаги человек мог бы случайно забыть?",
+        fixCorrectIndex: 0,
+        feedback: [
+          "Мы заметили пропущенный шаг.",
+          "Когда мы добавили его, инструкция стала полной и понятной."
+        ],
+        question: "Почему человеку легко догадаться про упаковку, а роботу нет?",
         aiLink: "Если важная деталь пропущена, система не всегда восстановит ее сама."
       },
       {
         id: "bug-hide",
         title: "Игра в прятки",
-        type: "choice",
-        prompt: "Проверь, сможет ли робот безопасно выполнить эти команды.",
+        type: "bug-hunt",
         note: "Иногда проблема в том, что в инструкции не хватает маленького, но решающего шага.",
         steps: ["Закрой глаза.", "Сосчитай до 10.", "Иди искать."],
-        options: [
+        detectPrompt: "Проверь, сможет ли робот безопасно выполнить эти команды.",
+        detectOptions: [
           "Забыли сказать: открой глаза.",
           "Нужно сначала подпрыгнуть.",
           "Нужно считать до 100."
         ],
-        correctIndex: 0,
-        feedback: [
-          "Забыли сказать: открой глаза.",
-          "Робот начнет искать с закрытыми глазами."
+        detectCorrectIndex: 0,
+        fixPrompt: "Какую версию инструкции теперь выберем?",
+        fixOptions: [
+          "Закрой глаза -> Сосчитай до 10 -> Открой глаза -> Иди искать",
+          "Закрой глаза -> Иди искать -> Сосчитай до 10",
+          "Открой глаза -> Иди домой -> Сосчитай до 10"
         ],
-        question: "Почему этот шаг кажется людям очевидным, а роботу нет?",
+        fixCorrectIndex: 0,
+        feedback: [
+          "Мы поймали баг: в инструкции не хватало важного шага.",
+          "После исправления робот уже смог бы искать безопасно."
+        ],
+        question: "Какой шаг оказался самым важным в этом исправлении?",
         aiLink: "Если важный шаг не указан, система не обязана догадаться о нем сама."
       }
     ]
@@ -190,8 +317,11 @@ const state = {
   moduleId: null,
   roundIndex: 0,
   stage: "intro",
+  criteriaIndex: 0,
+  roundSubstage: "play",
   answers: {},
-  sorterPlacements: {}
+  sorterPlacements: {},
+  tutorialBackState: null
 };
 
 const app = document.getElementById("app");
@@ -201,11 +331,50 @@ homeButton.addEventListener("click", () => {
   resetToHome();
 });
 
+function snapshotState() {
+  return {
+    screen: state.screen,
+    moduleId: state.moduleId,
+    roundIndex: state.roundIndex,
+    stage: state.stage,
+    criteriaIndex: state.criteriaIndex,
+    roundSubstage: state.roundSubstage
+  };
+}
+
+function restoreState(snapshot) {
+  state.screen = snapshot.screen;
+  state.moduleId = snapshot.moduleId;
+  state.roundIndex = snapshot.roundIndex;
+  state.stage = snapshot.stage;
+  state.criteriaIndex = snapshot.criteriaIndex;
+  state.roundSubstage = snapshot.roundSubstage;
+  render();
+}
+
+function openTutorial() {
+  state.tutorialBackState = snapshotState();
+  state.screen = "tutorial";
+  render();
+}
+
+function closeTutorial() {
+  if (state.tutorialBackState) {
+    const back = state.tutorialBackState;
+    state.tutorialBackState = null;
+    restoreState(back);
+    return;
+  }
+  resetToHome();
+}
+
 function resetToHome() {
   state.screen = "home";
   state.moduleId = null;
   state.roundIndex = 0;
   state.stage = "intro";
+  state.criteriaIndex = 0;
+  state.roundSubstage = "play";
   render();
 }
 
@@ -214,8 +383,8 @@ function startModule(moduleId) {
   state.moduleId = moduleId;
   state.roundIndex = 0;
   state.stage = "intro";
-  state.answers[moduleId] = {};
-  state.sorterPlacements[moduleId] = {};
+  state.criteriaIndex = 0;
+  state.roundSubstage = "play";
   render();
 }
 
@@ -228,27 +397,29 @@ function currentRound() {
   return module.rounds[state.roundIndex];
 }
 
-function goToRound(index) {
-  state.roundIndex = index;
-  state.stage = "round";
-  render();
-}
-
-function showRoundResult() {
-  state.stage = "round-result";
-  render();
+function currentCriterion(round) {
+  return round.criteria[state.criteriaIndex];
 }
 
 function nextStep() {
   const module = currentModule();
+  const round = currentRound();
+
   if (state.stage === "intro") {
     state.stage = "theory";
   } else if (state.stage === "theory") {
     state.stage = "round";
+    state.roundSubstage = round.type === "bug-hunt" ? "detect" : "play";
+    state.criteriaIndex = 0;
+  } else if (state.stage === "round" && round.type === "sort-sequence" && state.roundSubstage === "criteria-result") {
+    state.criteriaIndex += 1;
+    state.roundSubstage = "play";
   } else if (state.stage === "round-result") {
     if (state.roundIndex < module.rounds.length - 1) {
       state.roundIndex += 1;
       state.stage = "round";
+      state.criteriaIndex = 0;
+      state.roundSubstage = module.rounds[state.roundIndex].type === "bug-hunt" ? "detect" : "play";
     } else {
       state.stage = "outro";
     }
@@ -256,12 +427,18 @@ function nextStep() {
     resetToHome();
     return;
   }
+
   render();
 }
 
 function render() {
   if (state.screen === "home") {
     renderHome();
+    return;
+  }
+
+  if (state.screen === "tutorial") {
+    renderTutorial();
     return;
   }
 
@@ -283,17 +460,20 @@ function renderHome() {
   app.innerHTML = `
     <section class="hero">
       <div class="hero-copy">
-        <span class="module-chip">Версия MVP</span>
+        <span class="module-chip">Фаза 2</span>
         <h2>Небольшое приключение для взрослого и ребенка</h2>
-        <p>Здесь теория не живет отдельно. Сначала мы вместе читаем короткую подводку, потом выполняем задание, а в конце обсуждаем, что именно заметили и как это связано с AI.</p>
+        <p>Здесь теория не живет отдельно. Сначала мы читаем короткую подводку, потом выполняем задание, а в конце обсуждаем, что заметили и как это связано с AI.</p>
         <div class="hero-callout">
           <div class="companion-inline">
             <div class="companion-face">🤖</div>
             <div>
               <strong>Маленький робот Милы ждет помощи.</strong>
-              <p>Ему нужно либо навести порядок, либо понять, где сломалась инструкция.</p>
+              <p>Теперь он умеет не только учиться, но и смотреть на один и тот же набор карточек под разными углами.</p>
             </div>
           </div>
+        </div>
+        <div class="action-row">
+          <button class="secondary-button" type="button" id="open-tutorial">Что нужно знать про AI</button>
         </div>
         <div class="module-grid">
           <button class="module-tile primary" type="button" data-start="sorter">
@@ -303,7 +483,7 @@ function renderHome() {
             </div>
             <div class="tile-body">
               <h3>Сортировщик</h3>
-              <p>Замечаем важный признак и раскладываем предметы по группам.</p>
+              <p>Один набор карточек можно раскладывать по разным признакам. В этом и есть фокус игры.</p>
             </div>
             <span class="tile-footer">Играть</span>
           </button>
@@ -315,7 +495,7 @@ function renderHome() {
             </div>
             <div class="tile-body">
               <h3>Поймай баг</h3>
-              <p>Ищем место, где инструкция ломается, и помогаем роботу ее починить.</p>
+              <p>Сначала находим ошибку, потом чиним инструкцию и помогаем роботу сделать все правильно.</p>
             </div>
             <span class="tile-footer">Играть</span>
           </button>
@@ -324,9 +504,46 @@ function renderHome() {
     </section>
   `;
 
+  document.getElementById("open-tutorial").addEventListener("click", openTutorial);
   app.querySelectorAll("[data-start]").forEach((button) => {
     button.addEventListener("click", () => startModule(button.dataset.start));
   });
+}
+
+function renderTutorial() {
+  app.innerHTML = `
+    <section class="panel">
+      <div class="panel-header">
+        <div>
+          <span class="module-chip">AI tutorial</span>
+          <h2>${aiTutorial.title}</h2>
+        </div>
+      </div>
+      <div class="sticky-note">
+        <p>${aiTutorial.intro.join("</p><p>")}</p>
+      </div>
+      <div class="tutorial-grid">
+        ${aiTutorial.points
+          .map(
+            (point) => `
+              <div class="tutorial-card">
+                <h3>${point.title}</h3>
+                <p>${point.text}</p>
+              </div>
+            `
+          )
+          .join("")}
+      </div>
+      <div class="sticky-note">
+        <p>${aiTutorial.outro}</p>
+      </div>
+      <div class="button-row">
+        <button class="primary-button" type="button" id="close-tutorial">Вернуться</button>
+      </div>
+    </section>
+  `;
+
+  document.getElementById("close-tutorial").addEventListener("click", closeTutorial);
 }
 
 function renderModuleIntro(module) {
@@ -337,7 +554,7 @@ function renderModuleIntro(module) {
           <span class="module-chip">${module.emoji} ${module.title}</span>
           <h2>${module.introTitle}</h2>
         </div>
-        <span class="round-chip">3 раунда</span>
+        <span class="round-chip">${module.rounds.length} раунда</span>
       </div>
       <div class="round-layout">
         <div class="plain-block">
@@ -347,17 +564,19 @@ function renderModuleIntro(module) {
           <h3>Что мы будем делать</h3>
           <p>${module.idea}</p>
           <ul class="bullet-list">
-            <li>Слушаем короткую подводку</li>
-            <li>Делаем задание руками и глазами</li>
-            <li>Обсуждаем, что заметили</li>
+            <li>Сначала слушаем короткую подводку</li>
+            <li>Потом выполняем задание</li>
+            <li>И обязательно обсуждаем результат</li>
           </ul>
         </div>
       </div>
       <div class="button-row">
+        <button class="secondary-button" type="button" id="open-tutorial">Вспомнить про AI</button>
         <button class="primary-button" type="button" id="next-step">Дальше</button>
       </div>
     </section>
   `;
+  document.getElementById("open-tutorial").addEventListener("click", openTutorial);
   document.getElementById("next-step").addEventListener("click", nextStep);
 }
 
@@ -374,14 +593,50 @@ function renderModuleTheory(module) {
         <p>${module.theoryText.join("</p><p>")}</p>
       </div>
       <div class="button-row">
+        <button class="secondary-button" type="button" id="open-tutorial">Что надо помнить про AI</button>
         <button class="primary-button" type="button" id="next-step">Начать первый раунд</button>
       </div>
     </section>
   `;
+  document.getElementById("open-tutorial").addEventListener("click", openTutorial);
   document.getElementById("next-step").addEventListener("click", nextStep);
 }
 
 function renderRound(module, round) {
+  if (round.type === "sort-sequence") {
+    renderSortSequenceRound(module, round);
+    return;
+  }
+
+  renderBugHuntRound(module, round);
+}
+
+function renderSortSequenceRound(module, round) {
+  const criterion = currentCriterion(round);
+  const criteriaTotal = round.criteria.length;
+
+  if (state.roundSubstage === "criteria-result") {
+    app.innerHTML = `
+      <section class="result-panel">
+        <span class="success-badge">✨ Сортировка ${state.criteriaIndex + 1} из ${criteriaTotal} готова</span>
+        <div>
+          <span class="round-chip">${round.title}</span>
+          <h2>${criterion.title}</h2>
+        </div>
+        <p>${criterion.feedback.join("</p><p>")}</p>
+        <div class="sticky-note">
+          <h3>Что изменилось</h3>
+          <p>Карточки остались теми же, но мы выбрали новый признак и поэтому получили другой порядок.</p>
+        </div>
+        <div class="button-row">
+          <button class="primary-button" type="button" id="next-step">Следующий признак</button>
+        </div>
+      </section>
+    `;
+    document.getElementById("next-step").addEventListener("click", nextStep);
+    return;
+  }
+
   app.innerHTML = `
     <section class="panel">
       <div class="panel-header">
@@ -391,46 +646,35 @@ function renderRound(module, round) {
         </div>
         <span class="round-chip">Раунд ${state.roundIndex + 1} из ${module.rounds.length}</span>
       </div>
+      <div class="stage-banner">
+        <span class="stage-chip">${criterion.title}</span>
+        <p>Признак ${state.criteriaIndex + 1} из ${criteriaTotal}</p>
+      </div>
       <div class="round-layout">
         <div class="stage-column">
           <div class="plain-block">
-            <p class="round-instruction">${round.note || round.prompt}</p>
+            <p class="round-instruction">${criterion.note}</p>
           </div>
-          ${round.steps ? renderSteps(round.steps) : ""}
           <div class="sticky-note">
             <h3>Задание</h3>
-            <p class="round-instruction">${round.prompt}</p>
+            <p class="round-instruction">${criterion.prompt}</p>
           </div>
         </div>
         <div class="stage-column">
-          ${round.type === "sort" ? renderSortRound(round) : renderChoiceRound(round)}
+          ${renderSortPlay(round.cards, criterion)}
         </div>
       </div>
     </section>
   `;
 
-  if (round.type === "sort") {
-    wireSortRound(round);
-  } else {
-    wireChoiceRound(round);
-  }
+  wireSortRound(round, criterion);
 }
 
-function renderSteps(steps) {
-  return `
-    <div class="steps-box">
-      <ol>
-        ${steps.map((step) => `<li>${step}</li>`).join("")}
-      </ol>
-    </div>
-  `;
-}
-
-function renderSortRound(round) {
-  const colsClass = round.zones.length === 2 ? "two" : "three";
+function renderSortPlay(cards, criterion) {
+  const colsClass = criterion.zones.length === 2 ? "two" : "three";
   return `
     <div class="drop-zone-grid ${colsClass}">
-      ${round.zones
+      ${criterion.zones
         .map(
           (zone) => `
             <div class="drop-zone" data-zone="${zone.id}">
@@ -443,7 +687,7 @@ function renderSortRound(round) {
     <div>
       <h3>Карточки</h3>
       <div class="cards-grid">
-        ${round.cards
+        ${cards
           .map(
             (card) => `
               <div class="card-tile" draggable="true" data-card="${card.id}">
@@ -461,9 +705,10 @@ function renderSortRound(round) {
   `;
 }
 
-function wireSortRound(round) {
-  const zoneState = {};
-  const cards = new Map(round.cards.map((card) => [card.id, card]));
+function wireSortRound(round, criterion) {
+  const placementKey = `${round.id}:${criterion.id}`;
+  state.sorterPlacements[placementKey] = {};
+  const zoneState = state.sorterPlacements[placementKey];
   let draggedId = null;
 
   app.querySelectorAll(".card-tile").forEach((cardEl) => {
@@ -498,35 +743,83 @@ function wireSortRound(round) {
       window.alert("Сначала разложи все карточки по местам.");
       return;
     }
-    const isCorrect = round.cards.every((card) => zoneState[card.id] === cards.get(card.id).zone);
+
+    const isCorrect = round.cards.every((card) => zoneState[card.id] === criterion.assignments[card.id]);
     if (!isCorrect) {
-      window.alert("Почти получилось. Давай посмотрим еще раз внимательно.");
+      window.alert("Почти получилось. Давай посмотрим еще раз на выбранный признак.");
       return;
     }
-    showRoundResult();
+
+    if (state.criteriaIndex < round.criteria.length - 1) {
+      state.roundSubstage = "criteria-result";
+      render();
+      return;
+    }
+
+    state.stage = "round-result";
+    render();
   });
 }
 
-function renderChoiceRound(round) {
-  return `
-    <div class="choice-grid">
-      ${round.options
-        .map(
-          (option, index) => `
-            <button class="choice-button" type="button" data-option="${index}">
-              ${option}
-            </button>
-          `
-        )
-        .join("")}
-    </div>
-    <div class="button-row">
-      <button class="primary-button" type="button" id="check-choice">Проверить</button>
-    </div>
+function renderBugHuntRound(module, round) {
+  const isDetect = state.roundSubstage === "detect";
+  const prompt = isDetect ? round.detectPrompt : round.fixPrompt;
+  const options = isDetect ? round.detectOptions : round.fixOptions;
+  const note = isDetect ? round.note : "Отлично, баг найден. Теперь давай поможем роботу исправить инструкцию.";
+  const buttonLabel = isDetect ? "Найти баг" : "Починить план";
+
+  app.innerHTML = `
+    <section class="panel">
+      <div class="panel-header">
+        <div>
+          <span class="module-chip">${module.emoji} ${module.title}</span>
+          <h2>${round.title}</h2>
+        </div>
+        <span class="round-chip">Раунд ${state.roundIndex + 1} из ${module.rounds.length}</span>
+      </div>
+      <div class="stage-banner">
+        <span class="stage-chip">${isDetect ? "Шаг 1" : "Шаг 2"}</span>
+        <p>${isDetect ? "Сначала замечаем ошибку" : "Теперь чиним инструкцию"}</p>
+      </div>
+      <div class="round-layout">
+        <div class="stage-column">
+          <div class="plain-block">
+            <p class="round-instruction">${note}</p>
+          </div>
+          <div class="steps-box">
+            <ol>
+              ${round.steps.map((step) => `<li>${step}</li>`).join("")}
+            </ol>
+          </div>
+          <div class="sticky-note">
+            <h3>${isDetect ? "Найди баг" : "Почини инструкцию"}</h3>
+            <p class="round-instruction">${prompt}</p>
+          </div>
+        </div>
+        <div class="stage-column">
+          <div class="choice-grid">
+            ${options
+              .map(
+                (option, index) => `
+                  <button class="choice-button" type="button" data-option="${index}">
+                    ${option}
+                  </button>
+                `
+              )
+              .join("")}
+          </div>
+          <div class="button-row">
+            <button class="primary-button" type="button" id="check-choice">${buttonLabel}</button>
+          </div>
+        </div>
+      </div>
+    </section>
   `;
+
+  wireBugHuntRound(round, isDetect);
 }
 
-function wireChoiceRound(round) {
+function wireBugHuntRound(round, isDetect) {
   let selectedIndex = null;
 
   app.querySelectorAll(".choice-button").forEach((button) => {
@@ -542,11 +835,21 @@ function wireChoiceRound(round) {
       window.alert("Сначала выбери ответ.");
       return;
     }
-    if (selectedIndex !== round.correctIndex) {
-      window.alert("Хорошая попытка. Давай перечитаем шаги и попробуем еще раз.");
+
+    const correctIndex = isDetect ? round.detectCorrectIndex : round.fixCorrectIndex;
+    if (selectedIndex !== correctIndex) {
+      window.alert(isDetect ? "Хорошая попытка. Давай перечитаем шаги и попробуем еще раз." : "Почти. Давай подумаем, какая версия плана действительно чинит ошибку.");
       return;
     }
-    showRoundResult();
+
+    if (isDetect) {
+      state.roundSubstage = "fix";
+      render();
+      return;
+    }
+
+    state.stage = "round-result";
+    render();
   });
 }
 
@@ -590,20 +893,22 @@ function renderModuleOutro(module) {
       <div class="sticky-note">
         <p>${module.outroText.join("</p><p>")}</p>
       </div>
-      <div class="companion-card">
+      <div class="sticky-note">
         <h3>Можно обсудить вместе</h3>
         <ul class="bullet-list">
-          <li>Что было самым легким?</li>
           <li>Что оказалось самым интересным?</li>
-          <li>Что бы робот теперь понял лучше?</li>
+          <li>Где группы менялись сильнее всего?</li>
+          <li>Какой баг было легче всего починить?</li>
         </ul>
       </div>
       <div class="button-row">
+        <button class="secondary-button" type="button" id="open-tutorial">Вернуться к tutorial</button>
         <button class="primary-button" type="button" id="next-step">Вернуться в меню</button>
       </div>
     </section>
   `;
 
+  document.getElementById("open-tutorial").addEventListener("click", openTutorial);
   document.getElementById("next-step").addEventListener("click", nextStep);
 }
 
