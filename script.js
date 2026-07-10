@@ -28,12 +28,12 @@ const modules = {
     id: "sorter",
     title: "Сортировщик",
     emoji: "🧺",
-    idea: "Берем один набор карточек и пробуем сортировать его по разным признакам.",
+    idea: "Берем один набор карточек и пробуем сортировать его по разным, все более хитрым признакам.",
     introTitle: "Помогаем роботу замечать признаки",
     introText: [
       "Сегодня мы будем помогать роботу смотреть на один и тот же набор карточек по-разному.",
-      "Иногда мы заметим цвет, иногда размер, а иногда — живое перед нами или неживое.",
-      "Карточки останутся теми же, но группы будут меняться."
+      "Сначала признаки будут простыми, а потом станут чуть хитрее: назначение, сезон, среда, роль и свойства.",
+      "Карточки останутся теми же, но группы будут меняться снова и снова."
     ],
     theoryText: [
       "Умные программы не делают все волшебством.",
@@ -48,291 +48,450 @@ const modules = {
     ],
     rounds: [
       {
-        id: "sorter-discovery",
-        title: "Набор исследователя",
+        id: "sorter-transport",
+        title: "Транспортная станция",
         type: "sort-sequence",
-        note: "Один и тот же набор можно раскладывать по-разному. Давай проверим это на практике.",
+        note: "На транспорте особенно хорошо видно, как один и тот же набор можно раскладывать совсем по-разному.",
         cards: [
-          { id: "bus", label: "Красный автобус", icon: "🚌" },
-          { id: "bike", label: "Синий велосипед", icon: "🚲" },
-          { id: "tree", label: "Зеленое дерево", icon: "🌳" },
-          { id: "cat", label: "Рыжий кот", icon: "🐈" },
-          { id: "apple", label: "Красное яблоко", icon: "🍎" },
-          { id: "spoon", label: "Металлическая ложка", icon: "🥄" }
+          { id: "bus", label: "Автобус", icon: "🚌" },
+          { id: "truck", label: "Грузовик", icon: "🚚" },
+          { id: "boat", label: "Корабль", icon: "🚢" },
+          { id: "plane", label: "Самолет", icon: "✈️" },
+          { id: "bike", label: "Велосипед", icon: "🚲" },
+          { id: "helicopter", label: "Вертолет", icon: "🚁" }
         ],
         criteria: [
           {
-            id: "red",
+            id: "by-place",
             title: "Сортировка 1",
-            note: "Сейчас мы смотрим только на цвет.",
-            prompt: "Разложи карточки на две группы: красное и не красное.",
+            note: "Сначала смотрим, где транспорт передвигается.",
+            prompt: "Разложи транспорт по среде: по земле, по воде и по воздуху.",
             zones: [
-              { id: "red", label: "Красное" },
-              { id: "not-red", label: "Не красное" }
+              { id: "land", label: "По земле" },
+              { id: "water", label: "По воде" },
+              { id: "air", label: "По воздуху" }
             ],
             assignments: {
-              bus: "red",
-              bike: "not-red",
-              tree: "not-red",
-              cat: "not-red",
-              apple: "red",
-              spoon: "not-red"
+              bus: "land",
+              truck: "land",
+              boat: "water",
+              plane: "air",
+              bike: "land",
+              helicopter: "air"
             },
             feedback: [
-              "Мы выбрали только один признак — цвет.",
-              "Хотя карточки разные, сейчас нас интересовало только, что красное, а что нет."
+              "Сейчас главным была среда передвижения.",
+              "Мы не смотрели на размер и не думали, кого везет транспорт."
             ]
           },
           {
-            id: "size",
+            id: "by-job",
             title: "Сортировка 2",
-            note: "Карточки те же. Теперь меняем признак.",
-            prompt: "Разложи карточки на группы: больше Милы и меньше Милы.",
+            note: "Теперь те же карточки, но новый вопрос: кого или что этот транспорт перевозит?",
+            prompt: "Разложи транспорт на пассажирский и грузовой.",
             zones: [
-              { id: "bigger", label: "Больше Милы" },
-              { id: "smaller", label: "Меньше Милы" }
+              { id: "people", label: "Пассажирский" },
+              { id: "cargo", label: "Грузовой" }
             ],
             assignments: {
-              bus: "bigger",
-              bike: "bigger",
-              tree: "bigger",
-              cat: "smaller",
-              apple: "smaller",
-              spoon: "smaller"
+              bus: "people",
+              truck: "cargo",
+              boat: "cargo",
+              plane: "people",
+              bike: "people",
+              helicopter: "people"
             },
             feedback: [
-              "Мы ничего не меняли в карточках, только стали смотреть на размер.",
+              "Мы ничего не меняли в карточках, только стали смотреть на роль транспорта.",
               "Из-за этого группы стали совсем другими."
             ]
           },
           {
-            id: "living",
+            id: "by-wheels",
             title: "Сортировка 3",
-            note: "Последний признак в этом наборе — живое или неживое.",
-            prompt: "Разложи карточки на группы: живое и неживое.",
+            note: "А теперь самый хитрый вопрос: есть ли у транспорта колеса?",
+            prompt: "Разложи транспорт на тот, у которого есть колеса, и тот, у которого колес нет.",
             zones: [
-              { id: "living", label: "Живое" },
-              { id: "not-living", label: "Неживое" }
+              { id: "wheels", label: "Есть колеса" },
+              { id: "no-wheels", label: "Нет колес" }
             ],
             assignments: {
-              bus: "not-living",
-              bike: "not-living",
-              tree: "living",
-              cat: "living",
-              apple: "living",
-              spoon: "not-living"
+              bus: "wheels",
+              truck: "wheels",
+              boat: "no-wheels",
+              plane: "no-wheels",
+              bike: "wheels",
+              helicopter: "no-wheels"
             },
             feedback: [
-              "Теперь мы уже не смотрели на цвет и не сравнивали размер.",
-              "Мы искали другой смысловой признак: живое это или неживое."
+              "Теперь главным стало устройство транспорта.",
+              "Оказывается, и здесь тот же набор можно разделить по-новому."
             ]
           }
         ],
         feedback: [
-          "Мы увидели самую важную вещь в этой игре: один и тот же набор можно разложить по-разному.",
-          "Все зависит от того, какой признак мы выбрали."
+          "Один и тот же транспорт можно описывать по месту, по роли и по устройству.",
+          "Это и есть главный фокус сортировщика."
         ],
-        question: "Какой признак больше всего менял группы?",
-        aiLink:
-          "Когда мы меняем признак, меняется и то, как система видит сходство между предметами."
+        question: "Какой из трех признаков здесь оказался самым неожиданным?",
+        aiLink: "Когда мы меняем признак, меняется и то, как система видит сходство между предметами."
       },
       {
-        id: "sorter-home",
-        title: "Комната открытий",
+        id: "sorter-wardrobe",
+        title: "Шкаф Милы",
         type: "sort-sequence",
-        note: "Теперь попробуем то же самое на предметах дома.",
+        note: "Одежду можно сортировать не только по тому, что это за вещь, но и по сезону, месту и назначению.",
         cards: [
-          { id: "pillow", label: "Подушка", icon: "🛏️" },
-          { id: "scarf", label: "Шарф", icon: "🧣" },
-          { id: "cup", label: "Чашка", icon: "☕" },
+          { id: "hat", label: "Шапка", icon: "🧢" },
           { id: "boots", label: "Ботинки", icon: "🥾" },
-          { id: "spoon2", label: "Ложка", icon: "🥄" },
-          { id: "bear", label: "Плюшевый мишка", icon: "🧸" }
+          { id: "shirt", label: "Футболка", icon: "👕" },
+          { id: "scarf", label: "Шарф", icon: "🧣" },
+          { id: "shorts", label: "Шорты", icon: "🩳" },
+          { id: "mittens", label: "Варежки", icon: "🧤" }
         ],
         criteria: [
           {
-            id: "soft",
+            id: "by-season",
             title: "Сортировка 1",
-            note: "Сначала проверим свойства предметов.",
-            prompt: "Разложи предметы на мягкие и твердые.",
+            note: "Сначала смотрим, для какого времени года эти вещи больше подходят.",
+            prompt: "Разложи одежду на летнюю и теплую.",
             zones: [
-              { id: "soft", label: "Мягкое" },
-              { id: "hard", label: "Твердое" }
+              { id: "summer", label: "Летняя" },
+              { id: "warm", label: "Теплая" }
             ],
             assignments: {
-              pillow: "soft",
-              scarf: "soft",
-              cup: "hard",
-              boots: "hard",
-              spoon2: "hard",
-              bear: "soft"
+              hat: "warm",
+              boots: "warm",
+              shirt: "summer",
+              scarf: "warm",
+              shorts: "summer",
+              mittens: "warm"
             },
             feedback: [
-              "Сейчас мы смотрели не на назначение, а на свойство предмета.",
-              "Это тоже важный признак для сортировки."
+              "Сейчас мы смотрели на сезон.",
+              "То есть на то, когда вещь особенно нужна."
             ]
           },
           {
-            id: "wear",
+            id: "by-place",
             title: "Сортировка 2",
-            note: "А теперь тот же набор — по новому вопросу.",
-            prompt: "Разложи предметы на те, которые можно надеть, и те, которые нельзя.",
+            note: "Теперь тот же набор — по месту на теле.",
+            prompt: "Разложи одежду на то, что надевают на голову, на руки, на ноги и на тело.",
             zones: [
-              { id: "wear", label: "Можно надеть" },
-              { id: "no-wear", label: "Нельзя надеть" }
+              { id: "head", label: "На голову" },
+              { id: "hands", label: "На руки" },
+              { id: "legs", label: "На ноги" },
+              { id: "body", label: "На тело" }
             ],
             assignments: {
-              pillow: "no-wear",
-              scarf: "wear",
-              cup: "no-wear",
-              boots: "wear",
-              spoon2: "no-wear",
-              bear: "no-wear"
+              hat: "head",
+              boots: "legs",
+              shirt: "body",
+              scarf: "body",
+              shorts: "legs",
+              mittens: "hands"
             },
             feedback: [
-              "Карточки остались теми же, но вопрос изменился.",
-              "Из-за этого предметы собрались уже в другие группы."
+              "Здесь групп стало уже больше, потому что мест на теле тоже больше.",
+              "Это более сложная сортировка, чем просто две корзины."
+            ]
+          },
+          {
+            id: "by-fast-walk",
+            title: "Сортировка 3",
+            note: "Последний вопрос чуть хитрее и связан уже с действием.",
+            prompt: "Разложи вещи на те, без которых можно быстро выбежать летом, и на те, которые нужны в холодный день.",
+            zones: [
+              { id: "quick", label: "Быстро летом" },
+              { id: "cold", label: "В холодный день" }
+            ],
+            assignments: {
+              hat: "cold",
+              boots: "cold",
+              shirt: "quick",
+              scarf: "cold",
+              shorts: "quick",
+              mittens: "cold"
+            },
+            feedback: [
+              "Теперь мы уже смотрели не просто на вещь, а на ситуацию.",
+              "Это еще один способ группировать тот же набор."
             ]
           }
         ],
         feedback: [
-          "Мы снова увидели, что предмет можно описывать разными способами.",
-          "Один и тот же набор меняет порядок, когда меняется признак."
+          "Одежду можно сортировать по сезону, по месту и даже по ситуации.",
+          "Это уже более сложный уровень, потому что признаки стали менее очевидными."
         ],
-        question: "Почему шарф и ботинки оказались вместе только во второй сортировке?",
-        aiLink: "Иногда система замечает не внешний вид, а назначение предмета."
+        question: "Какой признак здесь был самым сложным: сезон, место или ситуация?",
+        aiLink: "Иногда система замечает не внешний вид, а назначение предмета или ситуацию."
       },
       {
-        id: "sorter-shapes",
-        title: "Формы и цвета",
+        id: "sorter-kitchen",
+        title: "Кухонная миссия",
         type: "sort-sequence",
-        note: "На геометрических карточках особенно хорошо видно, как один признак меняет порядок всего набора.",
+        note: "На кухне предметы можно делить уже не только по виду, а по роли в целом действии.",
         cards: [
-          { id: "red-circle", label: "Красный круг", icon: "🔴" },
-          { id: "red-square", label: "Красный квадрат", icon: "🟥" },
-          { id: "blue-circle", label: "Синий круг", icon: "🔵" },
-          { id: "blue-triangle", label: "Синий треугольник", icon: "🔷" },
-          { id: "yellow-square", label: "Желтый квадрат", icon: "🟨" },
-          { id: "yellow-triangle", label: "Желтый треугольник", icon: "🔶" }
+          { id: "cup", label: "Чашка", icon: "☕" },
+          { id: "plate", label: "Тарелка", icon: "🍽️" },
+          { id: "pot", label: "Кастрюля", icon: "🍲" },
+          { id: "pan", label: "Сковорода", icon: "🍳" },
+          { id: "spoon", label: "Ложка", icon: "🥄" },
+          { id: "glass", label: "Стакан", icon: "🥛" }
         ],
         criteria: [
           {
-            id: "by-color",
+            id: "by-job",
             title: "Сортировка 1",
-            note: "Сначала нас интересует только цвет.",
-            prompt: "Разложи карточки на теплые цвета и холодные цвета.",
+            note: "Сначала выберем самый логичный признак — назначение.",
+            prompt: "Разложи предметы на те, что нужны для питья, еды и готовки.",
             zones: [
-              { id: "warm", label: "Теплые цвета" },
-              { id: "cold", label: "Холодные цвета" }
+              { id: "drink", label: "Для питья" },
+              { id: "eat", label: "Для еды" },
+              { id: "cook", label: "Для готовки" }
             ],
             assignments: {
-              "red-circle": "warm",
-              "red-square": "warm",
-              "blue-circle": "cold",
-              "blue-triangle": "cold",
-              "yellow-square": "warm",
-              "yellow-triangle": "warm"
+              cup: "drink",
+              plate: "eat",
+              pot: "cook",
+              pan: "cook",
+              spoon: "eat",
+              glass: "drink"
             },
             feedback: [
-              "Сначала мы вообще не смотрели на форму.",
-              "Мы использовали только цвет, и этого оказалось достаточно для сортировки."
+              "Здесь мы использовали роль предмета на кухне.",
+              "Это уже умнее, чем просто делить по цвету."
             ]
           },
           {
-            id: "by-angles",
+            id: "by-material",
             title: "Сортировка 2",
-            note: "Теперь те же карточки, но новый признак — углы.",
-            prompt: "Разложи карточки на те, у которых есть углы, и те, у которых углов нет.",
+            note: "А теперь тот же набор, но смотрим на материал.",
+            prompt: "Разложи предметы на металлические и стеклянные или керамические.",
             zones: [
-              { id: "angles", label: "Есть углы" },
-              { id: "no-angles", label: "Нет углов" }
+              { id: "metal", label: "Металл" },
+              { id: "other", label: "Стекло или керамика" }
             ],
             assignments: {
-              "red-circle": "no-angles",
-              "red-square": "angles",
-              "blue-circle": "no-angles",
-              "blue-triangle": "angles",
-              "yellow-square": "angles",
-              "yellow-triangle": "angles"
+              cup: "other",
+              plate: "other",
+              pot: "metal",
+              pan: "metal",
+              spoon: "metal",
+              glass: "other"
             },
             feedback: [
-              "Теперь цвет перестал быть главным.",
-              "Новый признак полностью пересобрал группы."
+              "Назначение исчезло, а материал вышел на первое место.",
+              "Тот же набор снова собрался иначе."
+            ]
+          },
+          {
+            id: "by-heat",
+            title: "Сортировка 3",
+            note: "Последний признак связан уже с действием на кухне.",
+            prompt: "Разложи предметы на те, которые можно ставить на огонь, и те, которые нельзя.",
+            zones: [
+              { id: "fire", label: "Можно на огонь" },
+              { id: "no-fire", label: "Нельзя на огонь" }
+            ],
+            assignments: {
+              cup: "no-fire",
+              plate: "no-fire",
+              pot: "fire",
+              pan: "fire",
+              spoon: "no-fire",
+              glass: "no-fire"
+            },
+            feedback: [
+              "Здесь уже нужно представить настоящее действие, а не только посмотреть на предмет.",
+              "Это делает сортировку сложнее и интереснее."
             ]
           }
         ],
         feedback: [
-          "На этих карточках особенно хорошо видно, как один и тот же набор меняется от выбранного признака.",
-          "Сначала главным был цвет, потом — форма."
+          "Кухонные предметы можно раскладывать по назначению, по материалу и по тому, как они участвуют в готовке.",
+          "Это уже более логическая сортировка, чем просто видимые признаки."
         ],
-        question: "Какой признак на этих карточках было легче заметить первым?",
+        question: "Какой из трех признаков здесь требует уже не только смотреть, но и представлять действие?",
         aiLink: "Иногда система видит одни и те же объекты по-разному в зависимости от того, какой признак сейчас важнее."
       },
       {
-        id: "sorter-nature",
-        title: "Дары природы",
+        id: "sorter-creatures",
+        title: "Обитатели планеты",
         type: "sort-sequence",
-        note: "Некоторые признаки видны сразу, а некоторые требуют подумать, что это за объект.",
+        note: "Животные хорошо подходят для более сложной сортировки: тут есть и внешний признак, и среда, и питание.",
         cards: [
-          { id: "leaf", label: "Лист", icon: "🍃" },
-          { id: "stone", label: "Камень", icon: "🪨" },
-          { id: "flower", label: "Цветок", icon: "🌼" },
-          { id: "cone", label: "Шишка", icon: "🌰" },
-          { id: "bug", label: "Жук", icon: "🐞" },
-          { id: "branch", label: "Ветка", icon: "🪵" }
+          { id: "eagle", label: "Орел", icon: "🦅" },
+          { id: "cow", label: "Корова", icon: "🐄" },
+          { id: "shark", label: "Акула", icon: "🦈" },
+          { id: "duck", label: "Утка", icon: "🦆" },
+          { id: "wolf", label: "Волк", icon: "🐺" },
+          { id: "butterfly", label: "Бабочка", icon: "🦋" }
         ],
         criteria: [
           {
-            id: "living",
+            id: "by-wings",
             title: "Сортировка 1",
-            note: "Сначала подумаем, что перед нами по природе.",
-            prompt: "Разложи находки на живое и неживое.",
+            note: "Сначала используем самый заметный внешний признак.",
+            prompt: "Разложи животных на тех, у кого есть крылья, и тех, у кого их нет.",
             zones: [
-              { id: "living", label: "Живое" },
-              { id: "not-living", label: "Неживое" }
+              { id: "wings", label: "Есть крылья" },
+              { id: "no-wings", label: "Нет крыльев" }
             ],
             assignments: {
-              leaf: "living",
-              stone: "not-living",
-              flower: "living",
-              cone: "living",
-              bug: "living",
-              branch: "living"
+              eagle: "wings",
+              cow: "no-wings",
+              shark: "no-wings",
+              duck: "wings",
+              wolf: "no-wings",
+              butterfly: "wings"
             },
             feedback: [
-              "Здесь мы смотрели не только на внешний вид, а на саму природу объекта.",
-              "Это уже более смысловой способ сортировки."
+              "Сейчас мы использовали внешний признак, который легко заметить.",
+              "Это удобный первый шаг для сортировки животных."
             ]
           },
           {
-            id: "touch",
+            id: "by-home",
             title: "Сортировка 2",
-            note: "А теперь посмотрим на ощущения от поверхности.",
-            prompt: "Разложи находки на гладкие и шершавые.",
+            note: "Теперь признак уже сложнее: где животное в основном живет.",
+            prompt: "Разложи животных по среде: суша, вода и воздух.",
             zones: [
-              { id: "smooth", label: "Гладкие" },
-              { id: "rough", label: "Шершавые" }
+              { id: "land", label: "Суша" },
+              { id: "water", label: "Вода" },
+              { id: "air", label: "Воздух" }
             ],
             assignments: {
-              leaf: "smooth",
-              stone: "smooth",
-              flower: "smooth",
-              cone: "rough",
-              bug: "smooth",
-              branch: "rough"
+              eagle: "air",
+              cow: "land",
+              shark: "water",
+              duck: "water",
+              wolf: "land",
+              butterfly: "air"
             },
             feedback: [
-              "Мы оставили тот же набор, но переключились на ощущение поверхности.",
-              "Теперь вместе оказались уже совсем другие карточки."
+              "Теперь внешний вид уже не был главным.",
+              "Нужно было подумать про среду жизни каждого животного."
+            ]
+          },
+          {
+            id: "by-food",
+            title: "Сортировка 3",
+            note: "Последний признак самый логический: кто чем питается.",
+            prompt: "Разложи животных на хищников и не хищников.",
+            zones: [
+              { id: "predator", label: "Хищники" },
+              { id: "not-predator", label: "Не хищники" }
+            ],
+            assignments: {
+              eagle: "predator",
+              cow: "not-predator",
+              shark: "predator",
+              duck: "not-predator",
+              wolf: "predator",
+              butterfly: "not-predator"
+            },
+            feedback: [
+              "Это уже не очень заметный признак глазами.",
+              "Здесь пришлось вспоминать, как животное живет и чем питается."
             ]
           }
         ],
         feedback: [
-          "Этот набор показал, что иногда мы сортируем по смыслу, а иногда — по ощущению или свойству.",
-          "Один и тот же мир можно рассматривать по-разному."
+          "Животных можно раскладывать по внешнему виду, по среде и по питанию.",
+          "Это уже высокий уровень сортировки, потому что признаки становятся более смысловыми."
         ],
-        question: "Какой из двух признаков здесь был более 'умным': живое или шершавое?",
+        question: "Какой признак здесь был самым сложным: крылья, среда или питание?",
         aiLink: "Некоторые признаки видны сразу, а некоторые требуют уже более глубокого понимания объекта."
+      },
+      {
+        id: "sorter-market",
+        title: "Продуктовая корзина",
+        type: "sort-sequence",
+        note: "Этот уровень сложнее, потому что здесь придется думать и про вкус, и про происхождение, и про способ еды.",
+        cards: [
+          { id: "apple", label: "Яблоко", icon: "🍎" },
+          { id: "carrot", label: "Морковь", icon: "🥕" },
+          { id: "cookie", label: "Печенье", icon: "🍪" },
+          { id: "cucumber", label: "Огурец", icon: "🥒" },
+          { id: "banana", label: "Банан", icon: "🍌" },
+          { id: "potato", label: "Картошка", icon: "🥔" }
+        ],
+        criteria: [
+          {
+            id: "by-sweet",
+            title: "Сортировка 1",
+            note: "Сначала признак вкуса.",
+            prompt: "Разложи продукты на сладкие и не сладкие.",
+            zones: [
+              { id: "sweet", label: "Сладкие" },
+              { id: "not-sweet", label: "Не сладкие" }
+            ],
+            assignments: {
+              apple: "sweet",
+              carrot: "not-sweet",
+              cookie: "sweet",
+              cucumber: "not-sweet",
+              banana: "sweet",
+              potato: "not-sweet"
+            },
+            feedback: [
+              "Сейчас главным был вкус.",
+              "Это быстрый, но не всегда самый точный способ сортировки."
+            ]
+          },
+          {
+            id: "by-grow",
+            title: "Сортировка 2",
+            note: "Теперь думаем, где растет продукт.",
+            prompt: "Разложи продукты на те, что растут на дереве, в земле и не растут сами.",
+            zones: [
+              { id: "tree", label: "На дереве" },
+              { id: "ground", label: "В земле" },
+              { id: "made", label: "Сделано людьми" }
+            ],
+            assignments: {
+              apple: "tree",
+              carrot: "ground",
+              cookie: "made",
+              cucumber: "ground",
+              banana: "tree",
+              potato: "ground"
+            },
+            feedback: [
+              "Здесь уже нельзя полагаться только на вкус.",
+              "Нужно подумать о происхождении каждого продукта."
+            ]
+          },
+          {
+            id: "by-raw",
+            title: "Сортировка 3",
+            note: "Последний признак связан уже со способом еды.",
+            prompt: "Разложи продукты на те, что можно есть сырыми, и те, что обычно сначала готовят.",
+            zones: [
+              { id: "raw", label: "Можно сырым" },
+              { id: "cook", label: "Обычно готовят" }
+            ],
+            assignments: {
+              apple: "raw",
+              carrot: "raw",
+              cookie: "raw",
+              cucumber: "raw",
+              banana: "raw",
+              potato: "cook"
+            },
+            feedback: [
+              "Теперь нам пришлось подумать не о вкусе и не о месте роста, а о привычном действии.",
+              "Это уже очень жизненный способ сортировки."
+            ]
+          }
+        ],
+        feedback: [
+          "На продуктах особенно хорошо видно, как признаки могут быть совсем разного типа.",
+          "Вкус, происхождение и способ еды дают три разных порядка."
+        ],
+        question: "Какой признак здесь оказался самым запутанным и почему?",
+        aiLink: "Когда признаки становятся более смысловыми, системе тоже труднее, и ей нужны хорошие примеры."
       }
     ]
   },
@@ -925,6 +1084,10 @@ function renderSortSequenceRound(module, round) {
 function renderSortPlay(cards, criterion) {
   const colsClass = criterion.zones.length === 2 ? "two" : "three";
   return `
+    <div class="sticky-note">
+      <h3>Как раскладывать карточки</h3>
+      <p>На планшете: сначала тапни по карточке, потом тапни по нужной корзине. На компьютере можно и перетаскивать.</p>
+    </div>
     <div class="drop-zone-grid ${colsClass}">
       ${criterion.zones
         .map(
@@ -962,10 +1125,34 @@ function wireSortRound(round, criterion) {
   state.sorterPlacements[placementKey] = {};
   const zoneState = state.sorterPlacements[placementKey];
   let draggedId = null;
+  let selectedCardId = null;
+
+  function refreshCardSelection() {
+    app.querySelectorAll(".card-tile").forEach((cardEl) => {
+      cardEl.classList.toggle("selected", cardEl.dataset.card === selectedCardId);
+    });
+  }
+
+  function placeCardInZone(cardId, zoneId) {
+    const cardEl = app.querySelector(`[data-card="${cardId}"]`);
+    const zoneEl = app.querySelector(`.drop-zone[data-zone="${zoneId}"]`);
+    if (!cardEl || !zoneEl) {
+      return;
+    }
+    zoneEl.appendChild(cardEl);
+    zoneState[cardId] = zoneId;
+    selectedCardId = null;
+    refreshCardSelection();
+  }
 
   app.querySelectorAll(".card-tile").forEach((cardEl) => {
     cardEl.addEventListener("dragstart", () => {
       draggedId = cardEl.dataset.card;
+    });
+    cardEl.addEventListener("click", () => {
+      const clickedId = cardEl.dataset.card;
+      selectedCardId = selectedCardId === clickedId ? null : clickedId;
+      refreshCardSelection();
     });
   });
 
@@ -983,9 +1170,14 @@ function wireSortRound(round, criterion) {
       if (!draggedId) {
         return;
       }
-      const cardEl = app.querySelector(`[data-card="${draggedId}"]`);
-      zoneEl.appendChild(cardEl);
-      zoneState[draggedId] = zoneEl.dataset.zone;
+      placeCardInZone(draggedId, zoneEl.dataset.zone);
+      draggedId = null;
+    });
+    zoneEl.addEventListener("click", () => {
+      if (!selectedCardId) {
+        return;
+      }
+      placeCardInZone(selectedCardId, zoneEl.dataset.zone);
     });
   });
 

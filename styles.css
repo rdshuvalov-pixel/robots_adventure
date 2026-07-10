@@ -456,6 +456,12 @@ h1 {
   user-select: none;
 }
 
+.card-tile.selected {
+  border: 2px solid rgba(255, 122, 89, 0.8);
+  box-shadow: 0 0 0 6px rgba(255, 122, 89, 0.12);
+  transform: translateY(-2px);
+}
+
 .card-tile span.icon {
   font-size: 2rem;
 }
